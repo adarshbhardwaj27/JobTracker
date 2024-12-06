@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { googleAuth } from "../api";
+import { googleAuth, setAuthStateInChromeStorage } from "../api";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -14,8 +14,9 @@ const LoginPage = () => {
         const token = result.data.token;
         const obj = { email, name, token };
         localStorage.setItem("user-info", JSON.stringify(obj));
-        navigate("/dashboard");
+        setAuthStateInChromeStorage("loggedIn");
         console.log("SUCCESS");
+        navigate("/dashboard");
       } else {
         console.log(authResult);
         throw new Error(authResult);

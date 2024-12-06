@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "My Chrome Extension",
+  "name": "JobTracker",
   "description": "An extension that does something cool",
   "version": "1.0",
   "permissions": ["storage", "activeTab"],
@@ -8,14 +8,13 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_popup_width": 4000,
+    "default_popup_height": 6000
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["./bundle.js"]
-    }
-  ],
+  "externally_connectable": {
+    "matches": ["http://localhost:5173/*"]
+  },
   "icons": {
     "16": "icon.png",
     "48": "icon.png",

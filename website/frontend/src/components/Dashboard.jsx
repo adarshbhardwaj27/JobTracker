@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setAuthStateInChromeStorage } from "../api";
 
 const Dashboard = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -13,6 +14,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user-info");
+    setAuthStateInChromeStorage("loggedOut");
     navigate("/login");
   };
 

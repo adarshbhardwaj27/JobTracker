@@ -54,13 +54,7 @@ module.exports = {
                 },
             ],
         }),
-    ],
-    devServer: {
-        static: path.join(__dirname, 'dist'), // Serve files from the `dist` directory
-        port: 3000, // Dev server port
-        hot: true, // Enable Hot Module Replacement (HMR)
-        open: true, // Automatically open the app in the browser
-    },
+    ]
 };
 
 
