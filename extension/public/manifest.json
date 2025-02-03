@@ -3,10 +3,11 @@
   "name": "JobTracker",
   "description": "An extension that does something cool",
   "version": "1.0",
-  "permissions": ["storage", "activeTab"],
+  "permissions": ["storage", "activeTab", "scripting"],
   "background": {
     "service_worker": "background.js"
   },
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "index.html",
     "default_popup_width": 4000,

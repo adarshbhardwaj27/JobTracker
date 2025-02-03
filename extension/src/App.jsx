@@ -39,6 +39,12 @@ function App() {
     }
   };
 
+  const PrivateRoute = ({ element }) => {
+    return authState === "loggedIn"
+      ? element
+      : (window.location.href = "http://localhost:5173/login");
+  };
+
   return (
     <>
       <div className="content">
@@ -46,7 +52,8 @@ function App() {
           {getLoginStatusMessage()}
         </h1>
         <br />
-        <Home />
+
+        <PrivateRoute element={<Home />} />
       </div>
     </>
   );
