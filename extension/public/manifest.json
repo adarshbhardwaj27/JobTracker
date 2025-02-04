@@ -3,9 +3,10 @@
   "name": "JobTracker",
   "description": "An extension that does something cool",
   "version": "1.0",
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["storage", "activeTab", "scripting", "notifications"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "host_permissions": ["<all_urls>"],
   "action": {

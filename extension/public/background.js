@@ -128,11 +128,7 @@
 
 
 // Import axios (ensure you're bundling your background script using a tool like Webpack)
-import axios from "axios";
 
-chrome.runtime.onInstalled.addListener(() => {
-    console.log("Extension Installed");
-});
 
 // Existing external message listener (if needed)
 chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
@@ -152,20 +148,86 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === "SITE_DATA") {
         console.log("Received site data:", message.data);
 
-        // Directly call your backend API with Axios, no local saving needed.
-        axios
-            .post("http://localhost:8080/ai", { data: message.data })
-            .then((response) => {
-                console.log("API call successful:", response.data);
-                // Respond back if necessary
-                sendResponse({ status: "API call successful", data: response.data });
-            })
-            .catch((error) => {
-                console.error("API call error:", error);
-                sendResponse({ status: "API call error", error: error.toString() });
-            });
+        // fetch("http://localhost:8080/api", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({ data: message.data }),
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log("API call successful:", data);
+        //         sendResponse({ status: "API call successful", data });
+        //     })
+        //     .catch((error) => {
+        //         console.error("API call error:", error);
+        //         sendResponse({ status: "API call error", error: error.toString() });
+        //     });
 
-        // Indicate that the response will be sent asynchronously.
         return true;
     }
 });
+
+
+// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+//     if (changeInfo.status === "complete" && tab.active) {
+//         // Check for restricted URLs (e.g., chrome://, edge://, about:)
+//         if (
+//             tab.url &&
+//             (tab.url.startsWith("chrome://") ||
+//                 tab.url.startsWith("edge://") ||
+//                 tab.url.startsWith("about:"))
+//         ) {
+//             console.warn("Skipping script injection on restricted URL:", tab.url);
+//             return;
+//         }
+
+//         // Inject script to extract site data
+//         chrome.scripting.executeScript({
+//             target: { tabId: tab.id },
+//             function: extractSiteData,
+//         }).catch((err) => console.error("Script injection error:", err));
+//     }
+// });
+
+// function extractSiteData() {
+//     const siteData = {
+//         title: document.title,
+//         url: window.location.href,
+//         text: document.body.innerText,
+//         buttonText: [...document.querySelectorAll("button")]
+//             .map((btn) => btn.innerText)
+//             .join(", "),
+//     };
+
+//     chrome.runtime.sendMessage({ type: "SITE_DATA", data: siteData });
+// }
+
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//     if (message.type === "SITE_DATA") {
+//         console.log("Extracted site data:", message.data);
+
+//         // Send POST request to backend
+//         fetch("http://localhost:8080/ai", {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify(message.data),
+//         })
+//             .then((response) => response.json())
+//             .then((data) => {
+//                 console.log("Backend response:", data);
+
+//                 // If response is true, show notification
+//                 if (data.success) {
+//                     chrome.notifications.create({
+//                         type: "basic",
+//                         iconUrl: "icon.png",
+//                         title: "JobTracker",
+//                         message: "Got it! The response is positive.",
+//                     });
+//                 }
+//             })
+//             .catch((error) => console.error("Error:", error));
+//     }
+// });

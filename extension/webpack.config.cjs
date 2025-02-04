@@ -9,6 +9,7 @@ module.exports = {
         filename: 'bundle.js', // Single output bundle
         clean: true, // Clean the output directory before build
     },
+    watch: true,
     resolve: {
         extensions: ['.js', '.jsx', '.json'], // Resolve these extensions
     },
